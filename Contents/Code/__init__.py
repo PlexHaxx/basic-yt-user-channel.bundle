@@ -124,6 +124,11 @@ def GetVideos(url, loop_next=True, start_index=1, max_results=50):
 	if 'feed' in json:
 		if 'entry' in json['feed']:
 			for video in json['feed']['entry']:
+
+				if 'app$control' in video and 'yt$state' in video['app$control'] and 'name' in video['app$control']['yt$state']:
+					if video['app$control']['yt$state']['name'] == 'restricted':
+						continue
+
 				video_id = video['media$group']['yt$videoid']['$t']
 				title = video['title']['$t']
 				summary = video['media$group']['media$description']['$t']
